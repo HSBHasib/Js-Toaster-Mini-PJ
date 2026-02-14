@@ -1,31 +1,36 @@
 function createToaster(config) {
     return function(notification) {
-        let div = document.createElement("div");
 
-        div.textContent = notification;
-        let classes = ["font-medium px-5 py-3.5 rounded-md shadow-lg absolute"];
+        let parentDiv = document.createElement("div");
+        parentClasses = ["absolute"];
 
         // Set Notification position on the webpage
         
         // For X-axis
         switch(config.positionX) {
             case "right":
-                classes.push("right-2");
+                parentClasses.push("right-4");
                 break;
             case "left":
-                classes.push("left-2");
+                parentClasses.push("left-4");
                 break;
         }
  
         // For Y-axis
         switch(config.positionY) {
             case "top":
-                classes.push("top-4");
+                parentClasses.push("top-4");
                 break;
             case "bottom":
-                classes.push("bottom-4"); 
+                parentClasses.push("bottom-4"); 
                 break;
         }
+        
+
+        let div = document.createElement("div");
+        
+        div.textContent = notification;
+        let classes = ["inline-block font-medium px-5 py-3.5 rounded-md shadow-lg"];
 
         // Check theme
         if(config.theme === "dark") {
@@ -36,8 +41,11 @@ function createToaster(config) {
             classes.push("bg-gray-100 text-black");
         }
 
+        parentDiv.className = parentClasses.join(" ");
         div.className = classes.join(" ");
-        document.body.append(div);
+
+        document.body.append(parentDiv);
+        parentDiv.append(div);
 
         setTimeout(() => {
             div.remove();
@@ -47,7 +55,7 @@ function createToaster(config) {
 }
 
 let toaster = createToaster({
-    positionX: "right",
+    positionX: "left",
     positionY: "top",
     theme: "dark",
     duration: 3,
