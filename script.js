@@ -1,10 +1,19 @@
+// Create parent div
+let parentDiv = document.createElement("div");
+parentDiv.classList.add("fixed", "flex", "flex-col", "gap-3");
+
 function createToaster(config) {
     return function(notification) {
 
-        let parentDiv = document.createElement("div");
-        parentClasses = ["absolute"];
+        // Create Notification div
+        let div = document.createElement("div");
+        
+        div.textContent = notification;
+        let classes = [" font-medium px-5 py-3.5 rounded-md shadow-lg"];
 
-        // Set Notification position on the webpage
+
+        // set the position of the notification
+        let parentClasses = [];
         
         // For X-axis
         switch(config.positionX) {
@@ -25,12 +34,6 @@ function createToaster(config) {
                 parentClasses.push("bottom-4"); 
                 break;
         }
-        
-
-        let div = document.createElement("div");
-        
-        div.textContent = notification;
-        let classes = ["inline-block font-medium px-5 py-3.5 rounded-md shadow-lg"];
 
         // Check theme
         if(config.theme === "dark") {
@@ -41,11 +44,12 @@ function createToaster(config) {
             classes.push("bg-gray-100 text-black");
         }
 
-        parentDiv.className = parentClasses.join(" ");
+        parentDiv.classList.add(...parentClasses);
         div.className = classes.join(" ");
-
+        
         document.body.append(parentDiv);
-        parentDiv.append(div);
+        parentDiv.appendChild(div);
+        
 
         setTimeout(() => {
             div.remove();
@@ -62,3 +66,9 @@ let toaster = createToaster({
 });
 
 toaster("This is a dummy notifications!");
+toaster("This is a dummy notifications!");
+toaster("This is a dummy notifications!");
+toaster("This is a dummy notifications!");
+
+
+
